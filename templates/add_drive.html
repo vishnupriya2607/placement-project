@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Drive</title>
+</head>
+<body>
+    <h2>Add Drive</h2>
+    <form action="/add_drive" method="post">
+        <label for="company_name">Company Name:</label><br>
+        <input type="text" id="company_name" name="company_name" required><br>
+        
+        <label for="company_description">Company Description:</label><br>
+        <textarea id="company_description" name="company_description" rows="4" required></textarea><br>
+        
+        <label for="date">Date:</label><br>
+        <input type="date" id="date" name="date" required><br>
+        
+        <label for="eligibility_criteria">Eligibility Criteria:</label><br>
+        <input type="text" id="eligibility_criteria" name="eligibility_criteria" required><br><br>
+        
+        <input type="submit" value="Add Drive">
+    </form>
+</body>
+</html>
