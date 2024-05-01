@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for,session
 from flask_mysqldb import MySQL
-
-app = Flask(__name__)
-
+app = Flask(__name__, template_folder="../client/templates")
 # MySQL Configuration
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
