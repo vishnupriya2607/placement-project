@@ -1,17 +1,139 @@
-<!-- templates/companies.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Companies</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px; /* Adjust the gap between grid items */
+        }
+
+        .company-container {
+            text-align: center;
+            padding: 10px;
+            background-color: #f5f5f5; /* Light gray background color */
+            border-radius: 8px; /* Rounded corners */
+            border: 1px solid #ccc; /* Light gray border */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            transition: box-shadow 0.3s ease;
+            width: 200px; /* Fixed width for each company container */
+            margin: 10px; /* Margin around each container */
+            display: inline-block; /* Ensure containers are displayed inline */
+        }
+
+        .company-container:hover {
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Slightly darker shadow on hover */
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 8px; /* Rounded corners for the image */
+        }
+
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Style for the search bar */
+        #searchInput {
+            width: 300px; /* Larger width */
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            background: url('search-icon.png') no-repeat 10px center;
+            background-size: 16px; /* Adjust the size of the icon */
+            padding-left: 35px; /* Add padding to the left for the icon */
+        }
+    </style>
 </head>
 <body>
-    <h1>Companies</h1>
-    <ul>
-        {% for company in companies %}
-        <li>{{ company.name }}</li>
-        {% endfor %}
-    </ul>
+    <h1>Company</h1>
+
+    <!-- Search bar with search icon -->
+    <div class="search-container">
+        <span class="search-icon">&#128269;</span> <!-- Unicode for search icon (magnifying glass) -->
+        <input type="text" id="searchInput" placeholder="Search for companies..." onkeyup="searchCompanies()">
+    </div>
+
+    <!-- Company grid -->
+    <div class="company-grid">
+        <!-- Company 1 -->
+        <div class="company-container">
+            <img src="{{ url_for('static', filename='infosys.jpg') }}" alt="Infosys">
+            <button onclick="goToCompany('Infosys')">Infosys</button>
+        </div>
+
+       
+
+        <!-- Company 4 -->
+        <div class="company-container">
+            <img src="{{ url_for('static', filename='cooper.jpg') }}" alt="cooper">
+            <button onclick="goToCompany('cooper')">Mr.Cooper</button>
+        </div>
+
+        <!-- Company 5 -->
+        <div class="company-container">
+            <img src="{{ url_for('static', filename='zoho-logo.png') }}" alt="zoho">
+            <button onclick="goToCompany('zoho')">Zoho</button>
+        </div>
+
+        <!-- Company 6 -->
+        
+    </div>
+
+    <!-- JavaScript code -->
+    <script>
+        function searchCompanies() {
+            // Get the search input value and convert it to lowercase
+            const searchValue = document.getElementById('searchInput').value.toLowerCase();
+
+            // Get all the company containers
+            const companyContainers = document.getElementsByClassName('company-container');
+
+            // Iterate through all the company containers
+            for (let i = 0; i < companyContainers.length; i++) {
+                // Get the current company container
+                const container = companyContainers[i];
+
+                // Get the company name from the button element
+                const companyName = container.getElementsByTagName('button')[0].innerText.toLowerCase();
+
+                // Check if the company name includes the search value
+                if (companyName.includes(searchValue)) {
+                    // If the search value is found in the company name, display the container
+                    container.style.display = '';
+                } else {
+                    // Otherwise, hide the container
+                    container.style.display = 'none';
+                }
+            }
+        }
+
+        function goToCompany(company) {
+            // Redirect to the company's description page
+            window.location.href = `/company/${company}`;
+        }
+    </script>
 </body>
 </html>

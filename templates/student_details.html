@@ -9,67 +9,110 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f4;
         }
-        #sidebar {
-            width: 250px;
+        .sidebar {
+            width: 100px; 
             height: 100%;
-            background-color: #4e54c8;
-            color: white;
             position: fixed;
             top: 0;
             left: 0;
-            padding-top: 20px;
+            background-color: #563FAB;
+            padding: 20px;
         }
-        #sidebar h1 {
-            text-align: center;
-            margin-bottom: 40px;
+        .sidebar img {
+            width: 60%;
+            margin-bottom: 20px;
+            border-radius: 50%;
         }
-        #sidebar ul {
+        .sidebar ul {
             list-style-type: none;
             padding: 0;
+            margin: 0;
         }
-        #sidebar ul li {
-            padding: 15px 20px;
-            cursor: pointer;
+        .sidebar li {
+            margin-bottom: 10px;
+            margin-left: 0;
+        }
+        .sidebar li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
             transition: background-color 0.3s ease;
         }
-        #sidebar ul li:hover {
-            background-color: #8f94fb;
+        .sidebar li a:hover{
+            background-color: #634bba;
         }
         #main-content {
-            margin-left: 250px;
+            margin-left: 120px;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
         #main-content h1 {
             color: #4e54c8;
-        }
-        #main-content img {
-            border-radius: 50%;
-            margin-right: 20px;
+            margin-bottom: 20px;
+            font-size: 24px;
         }
         table {
-            width: 100%;
+            width: 80%;
             border-collapse: collapse;
             margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
         }
         th, td {
-            padding: 10px;
+            padding: 15px;
             border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        #profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        @media only screen and (max-width: 600px) {
+            .sidebar {
+                display: none;
+            }
+            #main-content {
+                margin-left: 20px;
+            }
+            #profile-img {
+                width: 100px;
+                height: 100px;
+            }
+            table {
+                width: 90%;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="sidebar">
-        <h1>Student Dashboard</h1>
+    <div class="sidebar">
+        <img src="/static/KEC.png" alt="College Logo">
         <ul>
-            <li >Profile</li>
-            <li>Drive</li>
-            <li>Companies</li>
-            <li>Contact</li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="/student_dashboard">Drive</a></li>
+          <li><a href="/companies">Companies</a></li>
+          <li><a href="/contact">Contact</a></li>
         </ul>
     </div>
     <div id="main-content">
-        <h1>Hello,{{ student_details[1] }}</h1>
+        <img src="/static/swe.jpeg" alt="Profile Picture" id="profile-img">
+        <h1>Hello, {{ student_details[1] }}</h1>
         <table>
             <tr>
                 <th>Name</th>
@@ -97,5 +140,18 @@
             </tr>
         </table>
     </div>
+
+    <script>
+        document.getElementById('drive-button').addEventListener('click', function() {
+            fetch('/student_dashboard')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('main-content').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error fetching drives:', error);
+                });
+        });
+    </script>
 </body>
 </html>

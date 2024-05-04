@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login in</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppin&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    display:flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #8f94fb, #4e54c8);
+}
+
+.container{
+    width:750px;
+    display:flex;
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 5px 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.image{
+    background-color: blueviolet;
+}
+
+.content{
+    padding:10px;
+    margin-top: 60px;
+    border-radius: 10px;
+}
+
+h3{
+    text-align: center;
+    color:blueviolet;
+    font-size: 22px;
+    font-weight: bold;
+    text-shadow: 2px 2px 25px rgba(0, 0, 0, 0.5);
+}
+
+h1{
+    text-align: center;
+    padding-top: 4px;
+    color:white;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "Jersey 15", sans-serif;
+    font-weight: 400;
+    font-style: normal;  
+}
+
+input{
+    width:200px;
+    display: flex;
+    font-size: 16px;
+    margin:25px;
+    color: #4e54c8;
+    border: 1px solid grey;
+    padding: 8px;
+    outline: none;
+   
+}
+
+input[type]::placeholder{
+    color:blueviolet;
+    font-size: 16px;
+}
+
+button{
+    width:120px;
+    height: 35px;
+    color: #fff;
+    background-color: blueviolet;
+    font-size: 16px;
+    display: flex;
+    margin:auto;
+    padding: 8px 38px;
+    text-align: center;
+    outline: none;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.5s ease-out;
+}
+
+button:hover{
+    color:blueviolet;
+    background-color: #fff;
+    font-weight: bold;
+    outline: 2px solid blueviolet;
+}
+
+p{
+    color:blueviolet;
+    font-size: 16px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="image">
+            <img src="/static/1.jpg" width="450px" alt="1">
+            <h1 style="padding-bottom: 7px;">LOGIN</h1>
+        </div>
+        <div class="content">
+            <form action="/signin" method="post">
+                <label for="loginas">Login As:</label>
+                <input type="text" id="loginas" name="loginas" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                
+                <button type="submit">Login</button>
+            </form>
+            </div>
+    </div>
+    
+</body>
+</html>

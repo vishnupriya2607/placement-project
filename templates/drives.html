@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Drives</title>
+</head>
+<body>
+    <h1>Available Drives</h1>
+    <div id="drives-container"></div>
+
+    <script>
+        // Function to toggle opt-in/opt-out
+        function toggleOptInOut(driveId, studentId, opt) {
+            fetch('/toggle_opt_in_out', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    drive_id: driveId,
+                    student_id: studentId,
+                    opt: opt
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Opt-in/opt-out successful');
+                    // Reload the page or update UI as needed
+                } else {
+                    console.error('Opt-in/opt-out failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Function to render drives on the page
+        function renderDrives(drives) {
+            const container = document.getElementById('drives-container');
+            drives.forEach(drive => {
+                const driveCard = document.createElement('div');
+                driveCard.innerHTML = `
+                    <div>
+                        <h3>${drive.company_name}</h3>
+                        <p>${drive.company_description}</p>
+                        <p><strong>Eligibility Criteria:</strong> ${drive.eligibility_criteria}</p>
+                        <p><strong>Salary:</strong> ${drive.salary}</p>
+                        <button onclick="toggleOptInOut(${drive.id}, 123, 1)">Opt In</button>
+                        <button onclick="toggleOptInOut(${drive.id}, 123, 0)">Opt Out</button>
+                    </div>
+                    <hr>
+                `;
+                container.appendChild(driveCard);
+            });
+        }
+
+        // Fetch drives data from backend
+        fetch('/drives')
+        .then(response => response.json())
+        .then(data => {
+            renderDrives(data.drives);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    </script>
+</body>
+</html>

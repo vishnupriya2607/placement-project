@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="en">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Videos</title>
+
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Internal CSS -->
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        /* Styling for table header and cells */
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Table header styling */
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Styles for the entire page */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+        }
+
+        /* Style for the left sidebar */
+        .sidebar {
+            width: 100px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            overflow: auto;
+        }
+
+        /* Style for the header with menu bar */
+        header {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            position: fixed;
+            width: calc(100% - 100px);
+            left: 100px;
+            top: 0;
+            z-index: 1000;
+            margin-left: 40px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for the navigation menu */
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav li {
+            padding: 10px 20px;
+            position: relative;
+        }
+
+        nav a {
+            color: black;
+            text-decoration: none;
+        }
+
+        /* Dropdown menu styles */
+        nav ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            padding: 0;
+            border: 1px solid #ccc;
+        }
+
+        nav ul ul li {
+            width: 200px;
+        }
+
+        /* Show dropdown on hover */
+        nav li:hover ul {
+            display: block;
+        }
+
+        /* Style for the main content */
+        main {
+            margin-left: 150px;
+            margin-top: 50px;
+            padding: 20px;
+        }
+
+        /* Styles for company videos */
+        .column {
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .column:hover {
+            transform: translateY(-5px);
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Style for the video elements */
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        /* Style for the Placement Cell content */
+        #placementCellContent {
+            display: none;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for the Training Cell content */
+        #trainingCellContent {
+            display: none;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hidden table container */
+        #departmentPlacementData {
+            display: none;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+        <h3>Menu</h3>
+        <ul>
+            <li><a href="#">Item 1</a></li>
+            <li><a href="#">Item 2</a></li>
+            <li><a href="#">Item 3</a></li>
+        </ul>
+    </div>
+
+    <!-- Header with menu bar -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="togglePlacementCellContent()">Placement</a></li>
+                <li><a href="#" onclick="toggleTrainingCellContent()">Training</a></li>
+                <li>
+                    <a href="#">Status</a>
+                    <ul>
+                        <li><a href="#" onclick="showDepartmentPlacementData('2005-2006')">2005-2006</a></li>
+                        <li><a href="#" onclick="showDepartmentPlacement('2006-2007')">2006-2007</a></li>
+                        <li><a href="#" onclick="showDepartmentPlacementData('2008-2009')">2008-2009</a></li>
+                        <li><a href="#" onclick="showDepartmentPlacementData('2009-2010')">2009-2010</a></li>
+                        <li><a href="#" onclick="showDepartmentPlacementData('2010-2011')">2010-2011</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Hidden table container -->
+        <div id="departmentPlacementData">
+            <h1>Department Placement Data</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Department</th>
+                        <th>Total Placed</th>
+                        <th>% of Placement</th>
+                        <th>No. of Companies Visited</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CSE</td>
+                        <td>66</td>
+                        <td>63.61%</td>
+                        <td>31</td>
+                    </tr>
+                    <tr>
+                        <td>IT</td>
+                        <td>48</td>
+                        <td>62.33%</td>
+                        <td>33</td>
+                    </tr>
+                    <tr>
+                        <td>ECE</td>
+                        <td>94</td>
+                        <td>77.04%</td>
+                        <td>37</td>
+                    </tr>
+                    <tr>
+                        <td>EEE</td>
+                        <td>39</td>
+                        <td>69.64%</td>
+                        <td>33</td>
+                    </tr>
+                    <tr>
+                        <td>EIE</td>
+                        <td>26</td>
+                        <td>72.22%</td>
+                        <td>27</td>
+                    </tr>
+                    <tr>
+                        <td>MECH</td>
+                        <td>47</td>
+                        <td>86.53%</td>
+                        <td>23</td>
+                    </tr>
+                    <tr>
+                        <td>MTRS</td>
+                        <td>29</td>
+                        <td>100%</td>
+                        <td>16</td>
+                    </tr>
+                    <tr>
+                        <td>CIVIL</td>
+                        <td>31</td>
+                        <td>72.09%</td>
+                        <td>16</td>
+                    </tr>
+                    <tr>
+                        <td>CHEM</td>
+                        <td>32</td>
+                        <td>94.11%</td>
+                        <td>16</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Placement Cell content -->
+        <div id="placementCellContent">
+            <h3>About Placement Cell</h3>
+            <p>The Placement Cell has been functioning in our campus since 1998. Placement Cell serves as a bridge between the academic world and the professional realm, facilitating the transition of students from the classroom to the workplace.</p>
+            <p>Placement Cells have evolved significantly over the years and moved beyond merely organizing campus interviews to offering comprehensive career development services. The integration of technology has streamlined the job search process, allowing students to access job listings and resources online.</p>
+            <p>Furthermore, Placement Cells now recognize the importance of holistic development. We focus on nurturing not only technical skills but also interpersonal skills, emotional intelligence, and adaptability, as these qualities are highly valued by employers.</p>
+            <h4>Functions of a Placement Cell:</h4>
+            <ul>
+                <li><strong>Career Guidance:</strong> The Placement Cell offers students guidance and counselling to help them identify their career goals and aspirations. It assists in clarifying career paths, choosing suitable courses, and developing relevant skills.</li>
+                <li><strong>Industry Connections:</strong> Establishing strong relationships with industry professionals and organizations is a core function of the Placement Cell. We collaborate with companies to create internship opportunities, conduct campus recruitment drives, and foster industry-academia partnerships.</li>
+                <li><strong>Job Postings:</strong> The Placement Cell disseminates information about job openings and internships, ensuring students are aware of relevant opportunities which significantly reduce the stress and anxiety associated with job hunting.</li>
+            </ul>
+        </div>
+
+        <!-- Training Cell content -->
+        <div id="trainingCellContent">
+            <h3>Training Cell</h3>
+            <p>The Training Cell plays a vital role in students' success and it is one of the cornerstones of the Institute. This cell is committed to enhancing the professional skills of the students to meet industrial needs. It organizes more than 350 hours of training, including:</p>
+            <ul>
+                <li>Quantitative Aptitude and Logical Reasoning</li>
+                <li>Soft skills</li>
+                <li>Verbal Ability and Communicative Skills</li>
+                <li>Aptitude Shortcut Methods with Speed Maths</li>
+                <li>Problem Solving Skills</li>
+                <li>Advanced Technical Training</li>
+                <li>Full Stack Development Training</li>
+                <li>Company Specific Training</li>
+                <li>Skill Enhancement Training for Super Dream Companies</li>
+                <li>Mock Interview & Placement Readiness Sessions Through Industry Experts</li>
+                <li>Professional Grooming Training</li>
+                <li>Core Training</li>
+                <li>Competitive Coding Platform Training</li>
+                <li>Boot Camp</li>
+                <li>Hackathon</li>
+                <li>Coding Contest</li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- JavaScript for toggling the Placement Cell, Training Cell, and table content -->
+    <script>
+        // Toggle Placement Cell content
+        function togglePlacementCellContent() {
+            const placementContent = document.getElementById('placementCellContent');
+            const trainingContent = document.getElementById('trainingCellContent');
+            const placementData = document.getElementById('departmentPlacementData');
+
+            // Show Placement Cell content and hide other content
+            placementContent.style.display = placementContent.style.display === 'none' ? 'block' : 'none';
+            trainingContent.style.display = 'none';
+            placementData.style.display = 'none';
+        }
+
+        // Toggle Training Cell content
+        function toggleTrainingCellContent() {
+            const trainingContent = document.getElementById('trainingCellContent');
+            const placementContent = document.getElementById('placementCellContent');
+            const placementData = document.getElementById('departmentPlacementData');
+
+            // Show Training Cell content and hide other content
+            trainingContent.style.display = trainingContent.style.display === 'none' ? 'block' : 'none';
+            placementContent.style.display = 'none';
+            placementData.style.display = 'none';
+        }
+
+        // Function to show the department placement data table
+        function showDepartmentPlacementData(year) {
+            const placementData = document.getElementById('departmentPlacementData');
+            const placementContent = document.getElementById('placementCellContent');
+            const trainingContent = document.getElementById('trainingCellContent');
+
+            // Show department placement data and hide other content
+            placementData.style.display = placementData.style.display === 'none' ? 'block' : 'none';
+            placementContent.style.display = 'none';
+            trainingContent.style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

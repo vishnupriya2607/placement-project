@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+    }
+    
+    .content {
+      margin-left: 190px; 
+      margin-top: 40px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .profile {
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      padding: 20px;
+      animation: fadeIn 1s ease-in-out;
+      flex: 1;
+      margin-right: 10px;
+      width: 400px;
+      height: 560px;
+    }
+    .profile-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+    .profile-info {
+      margin-bottom: 20px;
+      position: relative; /* Add this */
+    }
+    .profile-info pre {
+      font-size: 17px;
+    }
+    .profile-info input[type="text"],
+    .profile-info input[type="email"],
+    .profile-info input[type="date"] {
+      border: none; 
+      outline: none;
+      background-color: transparent; 
+      margin-left: 5px;
+    }
+    #editBtn {
+        height: 35px;
+    color: #fff;
+    background-color: #563FAB;
+    font-size: 16px;
+    display: inline-block;
+    padding: 8px 26px;
+    text-align: center;
+    outline: none;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.1s ease-out;
+    margin-left: 10px;
+    }
+    #editBtn:hover {
+        color:#563FAB;
+    background-color: #fff;
+    font-weight: bold;
+    outline: 2px solid #563FAB;
+    }
+    #updateBtn { /* Add this */
+      display: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 35px;
+    color: #fff;
+    background-color: #563FAB;
+    font-size: 16px;
+    padding: 8px 26px;
+    text-align: center;
+    outline: none;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.1s ease-out;
+    
+    }
+    #updateBtn.show { /* Add this */
+      display: block;
+      height: 35px;
+    color: #fff;
+    background-color: #563FAB;
+    font-size: 16px;
+    padding: 8px 26px;
+    text-align: center;
+    outline: none;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.1s ease-out;
+    margin-left: -18px;
+    margin-top: 6px;
+    }
+
+    #updateBtn:hover{
+        color:#563FAB;
+    background-color: #fff;
+    font-weight: bold;
+    outline: 2px solid #563FAB;
+    }
+
+    .academic-info {
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      padding: 20px;
+      animation: slideIn 1s ease-in-out;
+      flex: 1;
+      margin-left: 10px;
+    }
+    .academic-info h2 {
+      margin-bottom: 10px;
+      font-size: 20px;
+      width: 500px;
+    }
+    .academic-info ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .academic-info ul li {
+      margin: 20px 0px;
+      font-size: 17px;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .sidebar {
+      width: 100px; 
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #563FAB;
+      padding: 20px;
+    }
+
+    .sidebar img {
+      width: 60%;
+      margin-bottom: 20px;
+      border-radius: 50%;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .sidebar li {
+      margin-bottom: 10px;
+      margin-left: 0;
+    }
+
+    .sidebar li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar li a:hover{
+      background-color: #634bba;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <img src="/static/KEC.png" alt="College Logo">
+      <ul>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Drive</a></li>
+        <li><a href="#">Companies</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="content">
+      <div class="profile">
+        <img src="/static/Profile.jpg" alt="Profile Picture" class="profile-image">
+        <div class="profile-info">
+          <h2>Personal Information</h2><button id="editBtn">Edit</button>
+          <form id="editForm" action="/update" method="POST">
+            <pre><strong>Name            :</strong> <input type="text" name="name" value="{{ data[0] }}" disabled></pre>
+            <pre><strong>Roll No         :</strong> <input type="text" name="roll_no" value="{{ data[1] }}" disabled></pre>
+            <pre><strong>Department      :</strong> <input type="text" name="department" value="{{ data[2] }}" disabled></pre>
+            <pre><strong>Email           :</strong> <input type="email" name="email" value="{{ data[3] }}" disabled></pre>
+            <pre><strong>Year of Passing :</strong> <input type="text" name="year_of_passing" value="{{ data[4] }}" disabled></pre>
+            <pre><strong>Date of Birth   :</strong> <input type="date" name="date_of_birth" value="{{ data[5] }}" disabled></pre>
+            <input type="submit" id="updateBtn" value="Update"> <!-- Modified: added id -->
+          </form>
+        </div>
+      </div>
+      <div class="academic-info">
+        <h2>Academic & Professional Details <button id="editAcademicBtn">Edit</button></h2>
+        <form id="academicForm" action="/update_academic" method="POST">
+            <ul>
+                <li><strong>10th Grade:</strong> <input type="text" name="SSLC" value="{{ data[6] }}" disabled></li>
+                <li><strong>12th Grade:</strong> <input type="text" name="hsc" value="{{ data[7] }}" disabled></li>
+                <li><strong>Diploma:</strong> <input type="text" name="diploma" value="{{ data[8] }}" disabled></li>
+                <li><strong>Undergraduate Degree (UG):</strong> <input type="text" name="ug" value="{{ data[9] }}" disabled></li>
+                <li><strong>Postgraduate Degree (PG):</strong> <input type="text" name="pg" value="{{ data[10] }}" disabled></li>
+                <li><strong>Backlog History:</strong> <input type="text" name="backlog_history" value="{{ data[11] }}" disabled></li>
+                <li><strong>Current Backlogs:</strong> <input type="text" name="current_backlogs" value="{{ data[12] }}" disabled></li>
+                <li><strong>Interest in Placements:</strong> <input type="text" name="place" value="{{ data[13] }}" disabled></li>
+                <li><strong>Work Experience:</strong> <input type="text" name="work" value="{{ data[14] }}" disabled></li>
+            </ul>
+            <input type="submit" id="updateAcademicBtn" value="Update" style="display: none;">
+        </form>
+    </div>
+    
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the edit button, edit form, and update button
+        var editBtn = document.getElementById('editBtn');
+        var editForm = document.getElementById('editForm');
+        var updateBtn = document.getElementById('updateBtn');
+
+        // Add click event listener to the edit button
+        editBtn.addEventListener('click', function () {
+            // Toggle the edit mode
+            var inputs = editForm.querySelectorAll('input[type="text"], input[type="email"], input[type="date"]');
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].disabled = !inputs[i].disabled;
+            }
+
+            // Toggle the visibility of the submit button
+            updateBtn.classList.toggle('show');
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    var editAcademicBtn = document.getElementById('editAcademicBtn');
+    var academicForm = document.getElementById('academicForm');
+    var updateAcademicBtn = document.getElementById('updateAcademicBtn');
+
+    editAcademicBtn.addEventListener('click', function () {
+        var inputs = academicForm.querySelectorAll('input[type="text"]');
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = !inputs[i].disabled;
+        }
+        updateAcademicBtn.style.display = updateAcademicBtn.style.display === 'none' ? 'inline-block' : 'none';
+    });
+});
+
+
+    
+
+  </script>
+</body>
+</html>

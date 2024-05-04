@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Opt In/Out</title>
+</head>
+<body>
+    <button id="toggleButton">Toggle Opt In/Out</button>
+
+    <script>
+        document.getElementById('toggleButton').addEventListener('click', function() {
+            var driveId = 123;  // Example drive ID
+            var studentId = 456;  // Example student ID
+            var opt = 1;  // Example opt-in value
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/toggle_opt_in_out');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log('Toggle successful');
+                } else {
+                    console.error('Toggle failed');
+                }
+            };
+            xhr.send(JSON.stringify({
+                drive_id: driveId,
+                student_id: studentId,
+                opt: opt
+            }));
+        });
+    </script>
+</body>
+</html>
